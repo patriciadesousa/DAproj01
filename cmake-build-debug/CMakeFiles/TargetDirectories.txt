@@ -1,0 +1,3 @@
+C:/Users/Joca/OneDrive/Desktop/PROJETOS/firstDA/cmake-build-debug/CMakeFiles/firstDA.dir
+C:/Users/Joca/OneDrive/Desktop/PROJETOS/firstDA/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Joca/OneDrive/Desktop/PROJETOS/firstDA/cmake-build-debug/CMakeFiles/rebuild_cache.dir

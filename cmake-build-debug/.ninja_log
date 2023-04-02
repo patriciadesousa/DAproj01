@@ -1,0 +1,10 @@
+# ninja log v5
+4	289	7021673726325288	CMakeFiles/firstDA.dir/src/Station.cpp.obj	bf4f7ad47575bf1a
+0	446	7021672920274149	CMakeFiles/firstDA.dir/src/Menu.cpp.obj	f3f2a3aab26cca8e
+11	866	7021672924443811	CMakeFiles/firstDA.dir/src/ReadFiles.cpp.obj	55992560a545292f
+20	519	7021672920837757	CMakeFiles/firstDA.dir/src/main.cpp.obj	9e8282743303659c
+290	427	7021673727682856	firstDA.exe	4c0d2990761635b7
+2	317	7021674267615019	CMakeFiles/firstDA.dir/src/main.cpp.obj	9e8282743303659c
+317	457	7021674268972790	firstDA.exe	4c0d2990761635b7
+2	266	7021674473032672	CMakeFiles/firstDA.dir/src/Station.cpp.obj	bf4f7ad47575bf1a
+266	398	7021674474289621	firstDA.exe	4c0d2990761635b7

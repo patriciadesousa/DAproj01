@@ -18,9 +18,13 @@ enum ServicesOfTrip{
 };
 
 struct Trip{
-    Trip(std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow);
+    Trip(int id,std::shared_ptr<StationNode> StationPartida, std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow);
 
     std::shared_ptr<StationNode> DestinyStation;
+
+    std::shared_ptr<StationNode> StationPartida;
+
+    int id;
 
     enum ServicesOfTrip Service;
 
@@ -38,7 +42,7 @@ struct StationNode{
 
     int dist;
 
-    std::list<Trip> trip;
+    std::vector<int> tripsid;
 
     std::shared_ptr<StationNode> parent;
 
@@ -50,9 +54,6 @@ struct StationNode{
 };
 
 class ReadFiles{
-    struct StationEquals{
-        bool operator()(const std::shared_ptr<StationNode>& stationNode1, const std::shared_ptr<StationNode>& stationNode2);
-    };
     public:
     ReadFiles(ReadFiles& other) = delete;
 
@@ -62,7 +63,7 @@ class ReadFiles{
 
     static ReadFiles* getInstance();
 
-    bool addTrip(std::string StationPreviously,std::string StationDestiny,enum ServicesOfTrip Service,int Capacity,int ActualFlow=0);
+    bool addTrip(int i,std::string StationPreviously,std::string StationDestiny,enum ServicesOfTrip Service,int Capacity,int ActualFlow=0);
 
     std::shared_ptr<StationNode> getStationNode(std::string nameofstation);
 
@@ -70,8 +71,11 @@ class ReadFiles{
 
     void resetVisitedStations();
 
+    void resetActualFlow();
+
     private:
     std::vector<std::shared_ptr<StationNode>> Stations;
+    std::vector<std::shared_ptr<Trip>> trips;
     ReadFiles(){}
 
     static ReadFiles* instance;

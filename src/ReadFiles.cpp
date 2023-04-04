@@ -53,7 +53,9 @@ void ReadFiles::loadFiles(){
     }
 
     std::getline(file_trips, buffer);
+    int i = 0;
     while(std::getline(file_trips, buffer).good()){
+        i++;
         std::istringstream line(buffer);
 
         std::string stationorigin;
@@ -76,11 +78,11 @@ void ReadFiles::loadFiles(){
             servicesOfTrip = ALFA_PENDULAR;
         }
 
-        addTrip(stationorigin,stationdestiny,servicesOfTrip,std::stoi(capacity));
+        addTrip(i, stationorigin,stationdestiny,servicesOfTrip,std::stoi(capacity));
     }
 }
 
-bool ReadFiles::addTrip(std::string StationPreviously,std::string StationDestiny,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
+bool ReadFiles::addTrip(int i, std::string StationPreviously,std::string StationDestiny,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
     std::shared_ptr<StationNode> src = getStationNode(StationPreviously);
     if(src.get()== nullptr) return false;
     std::shared_ptr<StationNode> dst = getStationNode(StationDestiny);
@@ -88,14 +90,13 @@ bool ReadFiles::addTrip(std::string StationPreviously,std::string StationDestiny
 
     bool found = false;
 
-    for(auto it = src->trip.begin();it!=src->trip.end();it++){
-        if((*(*it).DestinyStation)==*dst){
-            found = true;
-            return false;
-        }
+    if(std::find(src->tripsid.begin(),src->tripsid.end(),i)==src->tripsid.end()){
+        return false;
     }
-    auto tripnew = Trip(dst,Service,Capacity,ActualFlow);
-    src->trip.push_back(tripnew);
+    auto tripnew = Trip(i,src,dst,Service,Capacity,ActualFlow);
+    trips.push_back(std::make_shared<Trip>(tripnew));
+    src->tripsid.push_back(i);
+    dst->tripsid.push_back(i);
     return found;
 }
 
@@ -117,7 +118,15 @@ void ReadFiles::resetVisitedStations() {
         (*it)->dist = -1;
     }
 }
-Trip::Trip(std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
+
+void ReadFiles::resetActualFlow(){
+    for(auto it=trips.begin();it!=trips.end();it++){
+        (*it)->ActualFlow = 0;
+    }
+}
+Trip::Trip(int id,std::shared_ptr<StationNode> StationPartida,std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
+    this->id=id;
+    this->StationPartida=StationPartida;
     this->DestinyStation=DestinyStation;
     this->Service=Service;
     this->Capacity=Capacity;

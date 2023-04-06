@@ -7,4 +7,4 @@ include_directories(src)
 
 add_executable(firstDA
         src/Menu.cpp
-        src/Menu.h src/ReadFiles.cpp src/ReadFiles.h src/Station.h src/Station.cpp src/main.cpp)
+        src/Menu.h src/ReadFiles.cpp src/ReadFiles.h src/Station.h src/Station.cpp src/main.cpp src/T2.cpp src/T2.h)

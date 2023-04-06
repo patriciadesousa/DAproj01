@@ -2,6 +2,7 @@
 #include <sstream>
 #include "ReadFiles.h"
 #include <algorithm>
+#include <iostream>
 
 ReadFiles* ReadFiles::instance = nullptr;
 
@@ -55,7 +56,7 @@ void ReadFiles::loadFiles(){
     std::getline(file_trips, buffer);
     int i = 0;
     while(std::getline(file_trips, buffer).good()){
-        i++;
+
         std::istringstream line(buffer);
 
         std::string stationorigin;
@@ -79,21 +80,23 @@ void ReadFiles::loadFiles(){
         }
 
         addTrip(i, stationorigin,stationdestiny,servicesOfTrip,std::stoi(capacity));
+        i++;
     }
 }
 
 bool ReadFiles::addTrip(int i, std::string StationPreviously,std::string StationDestiny,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
     std::shared_ptr<StationNode> src = getStationNode(StationPreviously);
-    if(src.get()== nullptr) return false;
+    if(src.get() == nullptr) return false;
     std::shared_ptr<StationNode> dst = getStationNode(StationDestiny);
-    if(dst.get()== nullptr) return false;
+    if(dst.get() == nullptr) return false;
 
     bool found = false;
 
-    if(std::find(src->tripsid.begin(),src->tripsid.end(),i)==src->tripsid.end()){
+    if(std::find(src->tripsid.begin(),src->tripsid.end(),i)!=src->tripsid.end()){
         return false;
     }
-    auto tripnew = Trip(i,src,dst,Service,Capacity,ActualFlow);
+    enum FlowType a = NOT_DEFINED;
+    auto tripnew = Trip(i,src,dst,Service,Capacity,ActualFlow,a);
     trips.push_back(std::make_shared<Trip>(tripnew));
     src->tripsid.push_back(i);
     dst->tripsid.push_back(i);
@@ -101,12 +104,10 @@ bool ReadFiles::addTrip(int i, std::string StationPreviously,std::string Station
 }
 
 std::shared_ptr<StationNode> ReadFiles::getStationNode(std::string nameofstation){
-    return *std::find(Stations.begin(),Stations.end(),std::make_shared<StationNode>(Station(nameofstation)));
-}
-void ReadFiles::resetdistanceStations() {
-    static const std::shared_ptr<StationNode> null = std::shared_ptr<StationNode>(nullptr);
-    for (auto it = Stations.begin(); it != Stations.end(); it++) {
-        (*it)->dist = -1;
+    for(auto it=Stations.begin();it!=Stations.end();it++){
+        if((*it)->station.getName()==nameofstation){
+            return (*it);
+        }
     }
 }
 
@@ -115,7 +116,8 @@ void ReadFiles::resetVisitedStations() {
     for(auto it = Stations.begin(); it != Stations.end(); it++){
         (*it)->visited = false;
         (*it)->prev = null;
-        (*it)->dist = -1;
+        (*it)->idTOBFS = -1;
+        (*it)->parent = nullptr;
     }
 }
 
@@ -124,13 +126,14 @@ void ReadFiles::resetActualFlow(){
         (*it)->ActualFlow = 0;
     }
 }
-Trip::Trip(int id,std::shared_ptr<StationNode> StationPartida,std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow){
+Trip::Trip(int id,std::shared_ptr<StationNode> StationPartida,std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow,enum FlowType flowType1){
     this->id=id;
     this->StationPartida=StationPartida;
     this->DestinyStation=DestinyStation;
     this->Service=Service;
     this->Capacity=Capacity;
     this->ActualFlow=ActualFlow;
+    this->flowTypee=flowType1;
 }
 
 StationNode::StationNode(Station station1){
@@ -145,4 +148,14 @@ ReadFiles* ReadFiles::getInstance(){
     if(instance == nullptr) instance = new ReadFiles();
 
     return instance;
+}
+std::vector<std::shared_ptr<Trip>> ReadFiles::gettrips() {
+    return trips;
+}
+void ReadFiles::setActualFlow(int idOfTrip,int value){
+    trips[idOfTrip]->ActualFlow=value;
+}
+
+void ReadFiles::setFlowTypee(int idOfTrip,FlowType type) {
+    trips[idOfTrip]->flowTypee=type;
 }

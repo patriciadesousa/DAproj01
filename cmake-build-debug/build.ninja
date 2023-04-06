@@ -77,6 +77,13 @@ build CMakeFiles/firstDA.dir/src/main.cpp.obj: CXX_COMPILER__firstDA_Debug C$:/U
   OBJECT_DIR = CMakeFiles\firstDA.dir
   OBJECT_FILE_DIR = CMakeFiles\firstDA.dir\src
 
+build CMakeFiles/firstDA.dir/src/T2.cpp.obj: CXX_COMPILER__firstDA_Debug C$:/Users/Joca/OneDrive/Desktop/PROJETOS/firstDA/src/T2.cpp || cmake_object_order_depends_target_firstDA
+  DEP_FILE = CMakeFiles\firstDA.dir\src\T2.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  INCLUDES = -IC:/Users/Joca/OneDrive/Desktop/PROJETOS/firstDA/src
+  OBJECT_DIR = CMakeFiles\firstDA.dir
+  OBJECT_FILE_DIR = CMakeFiles\firstDA.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target firstDA
@@ -85,7 +92,7 @@ build CMakeFiles/firstDA.dir/src/main.cpp.obj: CXX_COMPILER__firstDA_Debug C$:/U
 #############################################
 # Link the executable firstDA.exe
 
-build firstDA.exe: CXX_EXECUTABLE_LINKER__firstDA_Debug CMakeFiles/firstDA.dir/src/Menu.cpp.obj CMakeFiles/firstDA.dir/src/ReadFiles.cpp.obj CMakeFiles/firstDA.dir/src/Station.cpp.obj CMakeFiles/firstDA.dir/src/main.cpp.obj
+build firstDA.exe: CXX_EXECUTABLE_LINKER__firstDA_Debug CMakeFiles/firstDA.dir/src/Menu.cpp.obj CMakeFiles/firstDA.dir/src/ReadFiles.cpp.obj CMakeFiles/firstDA.dir/src/Station.cpp.obj CMakeFiles/firstDA.dir/src/main.cpp.obj CMakeFiles/firstDA.dir/src/T2.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\firstDA.dir

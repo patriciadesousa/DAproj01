@@ -16,9 +16,13 @@ enum ServicesOfTrip{
     STANDARD,
     ALFA_PENDULAR
 };
-
+enum FlowType{
+    NOT_DEFINED,
+    FROM_DEPARTURE_TO_ARRIVAL,
+    FROM_ARRIVAL_TO_DEPARTURE
+};
 struct Trip{
-    Trip(int id,std::shared_ptr<StationNode> StationPartida, std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow);
+    Trip(int id,std::shared_ptr<StationNode> StationPartida, std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow,enum FlowType flowType);
 
     std::shared_ptr<StationNode> DestinyStation;
 
@@ -31,6 +35,8 @@ struct Trip{
     int Capacity;
 
     int ActualFlow;
+
+    enum FlowType flowTypee;
 };
 
 struct StationNode{
@@ -40,7 +46,7 @@ struct StationNode{
 
     bool visited;
 
-    int dist;
+    int idTOBFS;
 
     std::vector<int> tripsid;
 
@@ -67,13 +73,17 @@ class ReadFiles{
 
     std::shared_ptr<StationNode> getStationNode(std::string nameofstation);
 
-    void resetdistanceStations();
-
     void resetVisitedStations();
 
     void resetActualFlow();
 
-    private:
+    std::vector<std::shared_ptr<Trip>> gettrips();
+
+    void setActualFlow(int idOfTrip,int value);
+
+    void setFlowTypee(int idOfTrip,FlowType type);
+
+private:
     std::vector<std::shared_ptr<StationNode>> Stations;
     std::vector<std::shared_ptr<Trip>> trips;
     ReadFiles(){}

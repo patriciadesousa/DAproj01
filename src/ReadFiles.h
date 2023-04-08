@@ -83,12 +83,16 @@ class ReadFiles{
 
     void setFlowTypee(int idOfTrip,FlowType type);
 
+    std::vector<std::shared_ptr<StationNode>> getStations();
+    void addStation(StationNode stationNode);
+
 private:
     std::vector<std::shared_ptr<StationNode>> Stations;
     std::vector<std::shared_ptr<Trip>> trips;
     ReadFiles(){}
 
     static ReadFiles* instance;
+
 
 };
 

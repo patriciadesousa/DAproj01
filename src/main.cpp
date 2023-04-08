@@ -8,10 +8,5 @@
 int main(){
     ReadFiles * readFiles = ReadFiles::getInstance();
     readFiles->loadFiles();
-    /*std::shared_ptr<StationNode> src = readFiles->getStationNode("Oleiros");
-    for(auto it=src->tripsid.begin();it!=src->tripsid.end();it++){
-        std::cout<<*it<<"\n";
-    }*/
-    std::cout<<T2::MaxFlowNormal("Entroncamento","Santarém");
     return 0;
 }

@@ -124,6 +124,7 @@ void ReadFiles::resetVisitedStations() {
 void ReadFiles::resetActualFlow(){
     for(auto it=trips.begin();it!=trips.end();it++){
         (*it)->ActualFlow = 0;
+        (*it)->flowTypee=NOT_DEFINED;
     }
 }
 Trip::Trip(int id,std::shared_ptr<StationNode> StationPartida,std::shared_ptr<StationNode> DestinyStation,enum ServicesOfTrip Service,int Capacity,int ActualFlow,enum FlowType flowType1){
@@ -158,4 +159,10 @@ void ReadFiles::setActualFlow(int idOfTrip,int value){
 
 void ReadFiles::setFlowTypee(int idOfTrip,FlowType type) {
     trips[idOfTrip]->flowTypee=type;
+}
+std::vector<std::shared_ptr<StationNode>> ReadFiles::getStations() {
+    return Stations;
+}
+void ReadFiles::addStation(StationNode stationNode) {
+    Stations.push_back(std::make_shared<StationNode>(stationNode));
 }

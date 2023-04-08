@@ -12,7 +12,12 @@
 
 struct T2{
     static int MaxFlowNormal(std::string Partida, std::string Chegada);
-    static bool bfs(std::shared_ptr<StationNode> src, std::shared_ptr<StationNode> dst);
+
+    static std::vector<std::pair<std::shared_ptr<StationNode>, std::shared_ptr<StationNode>>> PairMostCapacity();
+
+    static bool bfs(std::shared_ptr<StationNode> src, std::shared_ptr<StationNode> dst, ReadFiles *readFiles);
+
+    static int arriveStation(std::string Destino);
 };
 
 

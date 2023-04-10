@@ -18,6 +18,10 @@ struct T2{
     static bool bfs(std::shared_ptr<StationNode> src, std::shared_ptr<StationNode> dst, ReadFiles *readFiles);
 
     static int arriveStation(std::string Destino);
+    
+    static map<string, int> MaxFlowEdgeM(std::string Municipality);
+
+    static map<string,int> MaxFlowEdgeD(std::string Districts);
 };
 
 

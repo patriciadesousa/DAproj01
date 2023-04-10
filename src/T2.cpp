@@ -1,6 +1,8 @@
 #include <queue>
 #include <iostream>
 #include "T2.h"
+#include "map"
+using namespace std;
 
 
 bool T2::bfs(std::shared_ptr<StationNode> src, std::shared_ptr<StationNode> dst,ReadFiles * readFiles)
@@ -145,6 +147,76 @@ std::vector<std::pair<std::shared_ptr<StationNode>,std::shared_ptr<StationNode>>
     }
     return pairs;
 }
+//2.3
+    map<string, int> T2::MaxFlowEdgeM(std::string Municipality){
+        ReadFiles * readFiles = ReadFiles::getInstance();
+        std::vector<std::shared_ptr<StationNode>> stationsz = readFiles->getStations();
+        std::vector <string> municipality;
+        for (auto i = stationsz.begin(); i != stationsz.end(); ++i) {
+        if(municipality.empty())
+            municipality.push_back((*i)->station.getMunicipality());
+        else{
+            if(!checkExists(municipality, (*i)->station.getMunicipality()))
+                municipality.push_back((*i)->station.getMunicipality());
+        }
+    }
+
+    double sum = 0;
+    std::map<std::string, int> mapa;
+    std::vector<std::shared_ptr<Trip>> trips = readFiles->gettrips();
+    for(auto& m: municipality){
+        for(auto i = stationsz.begin(); i != stationsz.end(); ++i) {
+            if(m == (*i)->station.getMunicipality()) {
+                for(auto j = trips.begin(); j != trips.end(); ++j) {
+                    if((*i) == (*j)->DestinyStation || (*i) == (*j)->StationPartida){
+                        sum += (*j)->Capacity;
+                    }
+                }
+            }
+        }
+        mapa.insert(std::make_pair(m, sum));
+    }
+    return mapa;
+}
+
+map<string,int> T2::MaxFlowEdgeD(std::string Districts){ //disctricts
+        ReadFiles * readFiles = ReadFiles::getInstance();
+        std::vector<std::shared_ptr<StationNode>> stationsz = readFiles->getStations();
+        std::vector <string> districts;
+        for (auto i = stationsz.begin(); i != stationsz.end(); ++i) {
+        if(districts.empty())
+            districts.push_back((*i)->station.getDistrict());
+        else{
+            if(!checkExists(districts, (*i)->station.getDistrict()))
+                districts.push_back((*i)->station.getDistrict());
+        }
+    }
+
+    double sum = 0;
+    std::map<std::string, int> mapa;
+    std::vector<std::shared_ptr<Trip>> trips = readFiles->gettrips();
+    for(auto& m: districts){
+        for(auto i = stationsz.begin(); i != stationsz.end(); ++i) {
+            if(m == (*i)->station.getDistrict()) {
+                for(auto j = trips.begin(); j != trips.end(); ++j) {
+                    if((*i) == (*j)->DestinyStation || (*i) == (*j)->StationPartida){
+                        sum += (*j)->Capacity;
+                    }
+                }
+            }
+        }
+        mapa.insert(std::make_pair(m, sum));
+    }
+    return mapa;
+}
+
+    bool checkExists(std::vector<string> m, std::string n){
+        for(auto k:m){
+            if(k == n) return true;
+        }
+        return false;
+    }
+
 //2.4
 int T2::arriveStation(std::string Destino){
     ReadFiles * readFiles = ReadFiles::getInstance();
